@@ -14,6 +14,10 @@ namespace HelloWorld.API.Controllers
         public ValuesController()
         {
             string connStr = ConfigurationManager.ConnectionStrings["cnStringSQL"].ConnectionString;
+
+            if (string.IsNullOrWhiteSpace(connStr))
+                throw new NullReferenceException("Connection string is not set properly");
+
             DM = new Lazy<IMessageDM>(() => new MessageDM(connStr));
         }
 
@@ -33,6 +37,7 @@ namespace HelloWorld.API.Controllers
         public string Get(int id)
         {
             IList<Message> list = DM.Value.GetMessages(null, id);
+
             if (list?.Count > 0)
                 return list[0].MessageString;
             else
@@ -54,6 +59,7 @@ namespace HelloWorld.API.Controllers
                 ID = id,
                 MessageString = value
             };
+
             DM.Value.Update(item);
         }
 

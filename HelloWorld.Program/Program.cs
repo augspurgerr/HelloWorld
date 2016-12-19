@@ -13,6 +13,9 @@ namespace HelloWorld.Program
 
         private static void Main(string[] args)
         {
+            if (string.IsNullOrWhiteSpace(connStr))
+                throw new NullReferenceException($"Connection string is not set properly.");
+
             DataManager = new Lazy<IMessageDM>(() => new MessageDM(connStr));
             Message msg = DataManager.Value.GetMessage();
             Console.WriteLine(msg.MessageString);

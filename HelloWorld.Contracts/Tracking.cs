@@ -16,8 +16,11 @@ namespace HelloWorld.Contracts
         }
 
         public DateTime CreatedDate { get; set; }
+
         public T ID { get; set; }
+
         public bool IsDeleted { get; set; }
+
         public DateTime? ModifiedDate { get; set; }
     }
 }
